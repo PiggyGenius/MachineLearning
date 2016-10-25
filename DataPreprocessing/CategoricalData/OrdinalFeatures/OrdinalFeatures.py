@@ -21,4 +21,3 @@ inv_size_mapping = {v: k for k, v in size_mapping.items()}
 # We apply it
 df['size'] = df['size'].map(inv_size_mapping)
 print(df)
-
