@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from mltools import plot_decision_regions
 from sklearn import datasets
 from sklearn.svm import SVC 
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
 # We load the iris data

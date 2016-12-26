@@ -5,7 +5,7 @@ sys.path.insert(0,"../../Tools/")
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import datasets
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.tree import export_graphviz
 from mltools import plot_decision_regions

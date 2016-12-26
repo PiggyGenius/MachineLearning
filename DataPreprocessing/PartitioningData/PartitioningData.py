@@ -2,7 +2,7 @@
 # -*-coding:Utf-8 -*
 import numpy as np
 import pandas as pd
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 
 wine_url = "https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data"
 df_wine = pd.read_csv(wine_url,header=None)

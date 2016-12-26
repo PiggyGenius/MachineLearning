@@ -3,11 +3,11 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn import datasets
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score
 from LogisticRegression import LogisticRegression
-from Plot import plot_decision_regions
+from plot import plot_decision_regions
 
 # The name of the flowers is already loaded as integers for better performance
 iris = datasets.load_iris()
