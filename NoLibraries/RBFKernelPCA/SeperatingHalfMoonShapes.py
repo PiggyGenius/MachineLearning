@@ -7,7 +7,7 @@ from sklearn.decomposition import PCA
 from matplotlib.ticker import FormatStrFormatter
 from RBFKernelPCA import RBF_Kernel_PCA
 
-# We create dataset of two half shapes moons
+# We create a dataset of two half shapes moons
 values, classes = make_moons(n_samples = 100, random_state = 123)
 plt.scatter(values[classes == 0, 0], values[classes == 0, 1], color = 'red', marker = '^', alpha = 0.5)
 plt.scatter(values[classes == 1, 0], values[classes == 1, 1], color = 'blue', marker = 'o', alpha = 0.5)
