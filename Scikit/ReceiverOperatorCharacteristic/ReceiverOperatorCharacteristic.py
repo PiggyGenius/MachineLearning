@@ -86,3 +86,15 @@ pipeline = pipeline.fit(train_values_2, train_classes)
 predicted_classes = pipeline.predict(test_values[:, [4, 14]])
 print('ROC AUC: {:.3f}'.format(roc_auc_score(y_true = test_classes,y_score = predicted_classes)))
 print('Accuracy: {:.3f}'.format(accuracy_score(y_true = test_classes, y_pred = predicted_classes)))
+
+###########################################################################################
+#
+# While the weighted macro-average is the default for multiclass problems in
+# scikit-learn, we can specify the averaging method via the average parameter
+# inside the different scoring functions that we import from the sklean.metrics
+# module, for example, the precision_score or make_scorer functions.
+# In python:
+#   pre_scorer = make_scorer(score_func=precision_score, pos_label = 1, greater_is_better =                 True, average='micro')
+#
+###########################################################################################
+
