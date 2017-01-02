@@ -82,7 +82,7 @@ class MajorityVoteClassifier(BaseEstimator, ClassifierMixin):
             maj_vote = np.apply_along_axis(lambda x: np.argmax(np.bincount(x, weights = self.weights)), axis = 1, arr = predictions)
 
         # We restore the original class labels and return the results of majority voting
-        maj_vote = self.lablenc_.inverse_transform(maj_vote)
+        maj_vote = self.labelencoder_.inverse_transform(maj_vote)
         return maj_vote
 
     def predict_proba(self, X):
