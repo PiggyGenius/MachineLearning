@@ -18,7 +18,7 @@ labels = {'pos':1, 'neg':0}
 df = pd.DataFrame();
 for s in ('test', 'train'):
     for l in ('pos', 'neg'):
-        path = './dataset/{}/{}'.format(s, l)
+        path = './{}/{}'.format(s, l)
         for file in os.listdir(path):
             with open(os.path.join(path, file), 'r') as infile:
                 txt = infile.read()
@@ -29,4 +29,4 @@ df.columns = ['review', 'sentiment']
 # We shuffle the dataframe and store the result in a csv file, reread it to check
 np.random.seed(0)
 df = df.reindex(np.random.permutation(df.index))
-df.to_csv('./movie_data.csv', index = False)
+df.to_csv('../movie_data.csv', index = False)
