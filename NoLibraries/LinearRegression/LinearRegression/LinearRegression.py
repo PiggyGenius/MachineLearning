@@ -3,8 +3,8 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.linear_model import LinearRegression
-
+import seaborn as sns
+                                        
 ####################################################################################################
 # ************************************************************************************************ #
 # *                                       HOUSING DATASET                                          #
@@ -31,24 +31,19 @@ from sklearn.linear_model import LinearRegression
 # We load the housing dataset
 df = pd.read_csv('https://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data', header = None, sep = '\s+')
 df.columns = ['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTAT', 'MEDV']
-
-X = df[['RM']].values
-y = df['MEDV'].values
-
-lr = LinearRegression()
-lr.fit(X, y)
-print('Slope: %.3f' % lr.coef_[0])
-print('Intercept: %.3f' % lr.intercept_)
+print(df.head())
 
 
-# Plots a scatterplot of the training samples and add the regression line
-def lin_regplot(X, y, model):
-    plt.scatter(X, y, c = 'blue')
-    plt.plot(X, model.predict(X), color = 'red')
-    return None
-
-lin_regplot(X, y, lr)
-plt.xlabel('Average number of rooms [RM] (standardized)')
-plt.ylabel('Price in $1000\'s [MEDV] (standardized)')
+# We create a scatterplot matrix, allows us to visualize pair-wise correlations between features
+sns.set(style = 'whitegrid', context = 'notebook')
+cols = ['LSTAT', 'INDUS', 'NOX', 'RM', 'MEDV']
+sns.pairplot(df[cols], size = 2.5)
 plt.show()
+sns.reset_orig()
 
+# We plot the correlation matrix array as a heat map
+cm = np.corrcoef(df[cols].values.T)
+sns.set(font_scale = 1.5)
+hm = sns.heatmap(cm, cbar = True, annot = True, square = True, fmt = '.2f', annot_kws = {'size': 15}, yticklabels = cols, xticklabels = cols)
+plt.show()
+print('Our target variable MEDV shows the largest correlation with the LSTAT variable (-0.74).There is a clear nonlinear relationship between LSTAT and MEDV. The correlation between RM and MEDV is also relatively high (0.70) and given the linear relationship between those two variables that we observed in the scatterplot, RM seems to be a good choice for an exploratory variable to introduce the concepts of a simple linear regression model.')

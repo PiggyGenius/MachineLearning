@@ -3,7 +3,8 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import StandardScaler
+from LinearRegressionGD import LinearRegressionGD
 
 ####################################################################################################
 # ************************************************************************************************ #
@@ -34,12 +35,20 @@ df.columns = ['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', '
 
 X = df[['RM']].values
 y = df['MEDV'].values
+sc_x = StandardScaler()
+sc_y = StandardScaler()
+X_std = sc_x.fit_transform(X)
+y_std = sc_y.fit_transform(y[:, np.newaxis]).flatten()
 
-lr = LinearRegression()
-lr.fit(X, y)
-print('Slope: %.3f' % lr.coef_[0])
-print('Intercept: %.3f' % lr.intercept_)
+lr = LinearRegressionGD()
+lr.fit(X_std, y_std)
 
+# We plot the cost as a function of the number of epochs to check for convergence
+plt.plot(range(1, lr.n_iter + 1), lr.cost_)
+plt.ylabel('SSE')
+plt.xlabel('Epoch')
+plt.show()
+print('We can see convergence after the fith epoch')
 
 # Plots a scatterplot of the training samples and add the regression line
 def lin_regplot(X, y, model):
@@ -47,8 +56,18 @@ def lin_regplot(X, y, model):
     plt.plot(X, model.predict(X), color = 'red')
     return None
 
-lin_regplot(X, y, lr)
+# We plot the number of rooms against house prices
+lin_regplot(X_std, y_std, lr)
 plt.xlabel('Average number of rooms [RM] (standardized)')
 plt.ylabel('Price in $1000\'s [MEDV] (standardized)')
 plt.show()
 
+# To scale the predicted outcome back on the Price in $1000's axes, we inverse_transform the scaler
+num_rooms_std = sc_x.transform(np.array([[5.0]]))
+price_std = lr.predict(num_rooms_std)
+# We don't have to update the weights of the intercept if working with standardized variables.
+# The y axis intercept is always 0.
+print('Slope: %.3f' % lr.w_[1])
+print('Intercept: %.3f' % lr.w_[0])
+print('\nWe use our model to predict the price of a house with five rooms.')
+print('Price in $1000\'s: %.3f' % sc_y.inverse_transform(price_std))
