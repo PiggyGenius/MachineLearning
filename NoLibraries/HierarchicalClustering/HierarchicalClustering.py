@@ -40,3 +40,32 @@ plt.tight_layout()
 plt.ylabel('Euclidean distance')
 plt.show()
 print('\n', 'Such a dendrogram summarizes the different clusters that were formed during the agglomerative hierarchical clustering. We can see that the samples ID_0 and ID_4, followed by ID_1 and ID_2, are the most similar ones based on the Euclidean distance metric.')
+
+######################################################################################################
+#                                                                                                    #
+#                       WE WANT TO ATTACH THE DENDROGRAM TO A HEAT MAP                               #
+#                                                                                                    #
+######################################################################################################
+
+# We create a figure object and define the x and y axis poistions, width and height of the dendrogram
+# We rotate the dendrogram 90 degree counter-clockwise
+fig = plt.figure(figsize = (8, 8))
+axd = fig.add_axes([0.09, 0.1, 0.2, 0.6])
+row_dendr = dendrogram(row_clusters, orientation = 'right')
+
+# We reorder data in our DataFrame according to clustering labels
+df_rowclust = df.ix[row_dendr['leaves'][::-1]]
+
+# We construct the heat map and put it next to the dendrgoram
+axm = fig.add_axes([0.23, 0.1, 0.6, 0.6])
+cax = axm.matshow(df_rowclust, interpolation = 'nearest', cmap = 'hot_r')
+
+# We remove the axis ticks, the axis spines, add a color bar, assign feature and sample names to x, y
+axd.set_xticks([])
+axd.set_yticks([])
+for i in axd.spines.values():
+    i.set_visible(False)
+fig.colorbar(cax)
+axm.set_xticklabels([''] + list(df_rowclust.columns))
+axm.set_yticklabels([''] + list(df_rowclust.index))
+plt.show()
