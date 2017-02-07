@@ -1,4 +1,4 @@
-#!/usr/bin/python3.5
+#!/usr/bin/python2.7
 # -*-coding:Utf-8 -*
 import sys
 sys.path.insert(0,"../../Tools/")

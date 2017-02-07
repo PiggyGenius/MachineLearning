@@ -32,7 +32,7 @@ classes = data_file.loc[:, 1].values
 le = LabelEncoder()
 classes = le.fit_transform(classes)
 
-# We devide the dataset into a train and test set
+# We divide the dataset into a train and test set
 train_values, test_values, train_classes, test_classes = train_test_split(values, classes, test_size = 0.20, random_state = 1)
 
 # Pipeline takes a list of tuples where the first value in each tuple is the identifier used to access individual objects in the pipeline
